@@ -1,0 +1,12 @@
+.note {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border-radius: 5px;
+  border: 2px solid red;
+  background: yellow;
+}
+
+.dragging {
+  border: 2px solid green;
+}

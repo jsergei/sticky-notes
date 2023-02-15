@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  margin: 5px;
+}
+
+.loading {
+  margin-left: 10px;
+}
+
+.area {
+  min-height: 600px;
+  border: 1px dashed black;
+  position: relative;
+  overflow: hidden;
+}
