@@ -7,9 +7,19 @@
   margin-left: 10px;
 }
 
-.area {
-  min-height: 600px;
-  border: 1px dashed black;
-  position: relative;
-  overflow: hidden;
+.areas {
+  display: flex;
+}
+
+.play-area {
+  flex-grow: 1;
+}
+
+.trash-area {
+  width: 80px;
+}
+
+.add-note-btn img {
+  width: 15px;
+  height: 15px;
 }

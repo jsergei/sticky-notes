@@ -1,64 +1,53 @@
-import React, {FC, useState, MouseEvent, useRef, DragEvent} from 'react';
+import React, {FC, useState} from 'react';
 import styles from './NoteContainer.module.scss';
-import DraggableNote from "../note/DraggableNote";
 import Note from '../common/Note';
-import {DRAG_TYPE, getClickRelativeCoords, NoteClickTranfer} from "../common/utils";
+import PlayArea from "../play-area/PlayArea";
+import TrashArea from "../trash-area/TrashArea";
 
 const NoteContainer: FC<any> = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const [isAddingMode, setAddingMode] = useState<boolean>(false);
-    const noteArea = useRef<HTMLDivElement>(null);
     const [noteId, setNoteId] = useState<number>(0);
 
     const startAddingNote = () => {
         setAddingMode(true);
     };
 
-    const finishAddingNote = (event: MouseEvent<HTMLDivElement>) => {
-        if (!noteArea.current || !isAddingMode)
-            return;
-        const {left, top} = getClickRelativeCoords(noteArea.current, event);
+    const onNoteCreated = (left: number, top: number): void => {
         setNotes([...notes, {text: '', left, top, id: noteId }]);
         setNoteId(prev => prev + 1);
         setAddingMode(false);
     };
 
-    const dragNoteOver = (e: DragEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        return false;
+    const onNotePositionUpdated = (id: number, left: number, top: number): void => {
+        const updatedNotes = notes.map(note => note.id === id ? {...note, left, top} : note);
+        setNotes(updatedNotes);
     }
 
-    const dropNote = (e: DragEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        const draggedDataStr = e.dataTransfer.getData(DRAG_TYPE);
-        if (draggedDataStr && noteArea.current) {
-            const draggedData: NoteClickTranfer = JSON.parse(draggedDataStr);
-            const {left, top} = getClickRelativeCoords(noteArea.current, e);
-            const updatedNotes = notes.map(note => note.id === draggedData.id
-                ? {...note, left: left - draggedData.clickLeft, top: top - draggedData.clickTop}
-                : note);
-            setNotes(updatedNotes);
-        }
-    };
+    const onNoteDeleted = (id: number): void => {
+        setNotes(notes.filter(note => note.id !== id));
+    }
 
     const loadingText = isAddingMode && <div className={styles.loading}>Click below to add the note</div>;
     return (
         <div>
-            <div className={styles['header']}>
-                <button onClick={startAddingNote}>Add Note</button>
+            <div className={styles.header}>
+                <button className={styles['add-note-btn']} onClick={startAddingNote} title="Add Note">
+                    <img src={'./add-sticky-note.svg'} />
+                </button>
                 {loadingText}
             </div>
-            <div ref={noteArea}
-                 className={styles['area']}
-                 onClick={finishAddingNote}
-                 onDragOver={dragNoteOver}
-                 onDrop={dropNote}>
-                {notes.map(note => <DraggableNote key={note.id} {...note}></DraggableNote>)}
+            <div className={styles['areas']}>
+                <PlayArea className={styles['play-area']}
+                          notes={notes}
+                          isAddingMode={isAddingMode}
+                          createNote={onNoteCreated}
+                          updateNotePosition={onNotePositionUpdated}></PlayArea>
+                <TrashArea className={styles['trash-area']}
+                           deleteNote={onNoteDeleted}></TrashArea>
             </div>
         </div>
     );
-};
+}
 
 export default NoteContainer;
