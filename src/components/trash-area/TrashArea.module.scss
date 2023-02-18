@@ -1,8 +1,17 @@
 .trash-area {
+  display: flex;
+  align-items: stretch;
   background: red;
   opacity: 0.2;
 }
 
 .in-focus {
   opacity: 0.8;
+}
+
+.remove-icon {
+  pointer-events: none;
+  flex-grow: 1;
+  background: url("../../../public/remove-note.svg") no-repeat center center;
+  background-size: 100% 100%;
 }

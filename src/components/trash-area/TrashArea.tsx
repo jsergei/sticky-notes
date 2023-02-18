@@ -19,10 +19,12 @@ const TrashArea: FC<TrashAreaProps> = ({className, deleteNote}) => {
 
     const dragEnter = () => {
         setInFocus(true);
+        console.log('in focus');
     };
 
     const dragLeave = () => {
         setInFocus(false);
+        console.log('not in focus');
     };
 
     const dropNoteToRemove = (e: DragEvent<HTMLDivElement>) => {
@@ -41,6 +43,7 @@ const TrashArea: FC<TrashAreaProps> = ({className, deleteNote}) => {
              onDragEnter={dragEnter}
              onDragLeave={dragLeave}
              onDrop={dropNoteToRemove}>
+            {inFocus && <div className={styles['remove-icon']}></div>}
         </div>
     );
 };

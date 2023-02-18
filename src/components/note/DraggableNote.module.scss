@@ -1,5 +1,5 @@
 .dragging {
-  border: 2px solid red;
+  display: none;
 }
 
 .sticky {
@@ -40,7 +40,7 @@
   font-family: 'Kalam', cursive;
   font-size: 1rem;
 
-  clip-path: url(#stickyClip);
+  clip-path: url('../../../public/sticky-note-basic.svg');
 }
 
 .resize-icon {
@@ -65,7 +65,7 @@
   width: 24px;
   height: 24px;
   left: -15px;
-  top: 3px;
+  top: -13px;
   transform: rotate(-90deg);
   z-index: 10;
   opacity: 0.3;

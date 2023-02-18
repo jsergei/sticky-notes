@@ -35,7 +35,7 @@ const PlayArea: FC<PlayAreaProps> = ({className, notes, isAddingMode, createNote
         if (draggedDataStr && areaEl.current) {
             const {id, clickLeft, clickTop} = JSON.parse(draggedDataStr) as NoteClickTranfer;
             const {left, top} = getClickRelativeCoords(areaEl.current, e);
-            updateNotePosition(id, left - clickLeft, top - clickTop);
+            updateNotePosition(id, left, top);
         }
     };
 
