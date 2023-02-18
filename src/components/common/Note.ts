@@ -3,4 +3,6 @@ export default interface Note {
     text: string;
     left: number;
     top: number;
+    width: number;
+    height: number;
 }

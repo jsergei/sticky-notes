@@ -1,6 +1,6 @@
 import React, {FC, DragEvent, useState} from "react";
 import styles from './TrashArea.module.scss';
-import {DRAG_TYPE, getClickRelativeCoords, NoteClickTranfer} from "../common/utils";
+import {DRAG_TYPE, NoteClickTranfer} from "../common/utils";
 
 interface TrashAreaProps {
     className: string;
@@ -17,16 +17,6 @@ const TrashArea: FC<TrashAreaProps> = ({className, deleteNote}) => {
         return false;
     }
 
-    const dragEnter = () => {
-        setInFocus(true);
-        console.log('in focus');
-    };
-
-    const dragLeave = () => {
-        setInFocus(false);
-        console.log('not in focus');
-    };
-
     const dropNoteToRemove = (e: DragEvent<HTMLDivElement>) => {
         e.stopPropagation();
         const draggedDataStr = e.dataTransfer.getData(DRAG_TYPE);
@@ -40,8 +30,8 @@ const TrashArea: FC<TrashAreaProps> = ({className, deleteNote}) => {
     return (
         <div className={`${className} ${styles['trash-area']} ${inFocus ? styles['in-focus'] : ''}`}
              onDragOver={dragOver}
-             onDragEnter={dragEnter}
-             onDragLeave={dragLeave}
+             onDragEnter={() => setInFocus(true)}
+             onDragLeave={() => setInFocus(false)}
              onDrop={dropNoteToRemove}>
             {inFocus && <div className={styles['remove-icon']}></div>}
         </div>

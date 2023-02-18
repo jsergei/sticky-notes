@@ -1,9 +1,13 @@
-import React, {FC, DragEvent, useRef, useState} from "react";
+import React, {FC, DragEvent, useRef, useState, MouseEvent} from "react";
 import Note from "../common/Note";
 import styles from './DraggableNote.module.scss';
 import {DRAG_TYPE, getClickRelativeCoords, NoteClickTranfer} from "../common/utils";
 
-const DraggableNote: FC<Note> = ({id, text, left, top}) => {
+interface DraggableNoteProps extends Note {
+    onResizeStart: (id: number, e: MouseEvent<HTMLImageElement>) => void;
+}
+
+const DraggableNote: FC<DraggableNoteProps> = ({id, text, left, top, width, height, onResizeStart}) => {
     const noteEl = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
 
@@ -35,11 +39,16 @@ const DraggableNote: FC<Note> = ({id, text, left, top}) => {
                  onDragStart={onDragStart}
                  onDragEnd={() => setIsDragging(false)}
                  className={styles['note-pin']}/>
-            <div className={styles['sticky-content']} draggable="false">
+            <div
+                className={styles['sticky-content']}
+                style={{width, height}}>
                 Hello! I'm a<br />
                 sticky note!
+                {text}
             </div>
             <img className={styles['resize-icon']}
+                 draggable="false"
+                 onMouseDown={(event) => onResizeStart(id, event)}
                  src="./resize-24.png"/>
         </div>
     );

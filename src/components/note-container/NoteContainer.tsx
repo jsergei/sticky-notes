@@ -13,8 +13,8 @@ const NoteContainer: FC<any> = () => {
         setAddingMode(true);
     };
 
-    const onNoteCreated = (left: number, top: number): void => {
-        setNotes([...notes, {text: '', left, top, id: noteId }]);
+    const onNoteCreated = (note: Note): void => {
+        setNotes([...notes, {...note, id: noteId }]);
         setNoteId(prev => prev + 1);
         setAddingMode(false);
     };
@@ -27,6 +27,11 @@ const NoteContainer: FC<any> = () => {
     const onNoteDeleted = (id: number): void => {
         setNotes(notes.filter(note => note.id !== id));
     }
+
+    const onNoteSizeUpdated = (id: number, width: number, height: number): void => {
+        const updatedNotes = notes.map(note => note.id === id ? {...note, width, height} : note);
+        setNotes(updatedNotes);
+    };
 
     const loadingText = isAddingMode && <div className={styles.loading}>Click below to add the note</div>;
     return (
@@ -42,7 +47,8 @@ const NoteContainer: FC<any> = () => {
                           notes={notes}
                           isAddingMode={isAddingMode}
                           createNote={onNoteCreated}
-                          updateNotePosition={onNotePositionUpdated}></PlayArea>
+                          updateNotePosition={onNotePositionUpdated}
+                          updateNoteSize={onNoteSizeUpdated}></PlayArea>
                 <TrashArea className={styles['trash-area']}
                            deleteNote={onNoteDeleted}></TrashArea>
             </div>
