@@ -1,12 +1,78 @@
-.note {
-  position: absolute;
+.dragging {
+  border: 2px solid red;
+}
 
-  img {
-    width: 100px;
-    height: 100px;
+.sticky {
+  position: absolute;
+  left: 200px;
+  top: 100px;
+}
+
+/* Shadow behind the sticky note */
+.sticky:before {
+  box-shadow: -2px 2px 15px 0 rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25);
+  content: '';
+  position: absolute;
+  width: 90%;
+  left: 5px;
+  top: 25px;
+  bottom: 5%;
+  position: absolute;
+}
+
+/* The sticky note itself */
+.sticky-content {
+  padding: 5px;
+  background: linear-gradient(
+                  180deg,
+                  rgba(187, 235, 255, 1) 0%,
+                  rgba(187, 235, 255, 1) 12%,
+                  rgba(170, 220, 241, 1) 75%,
+                  rgba(195, 229, 244, 1) 100%
+  );
+  min-width: 100px;
+  min-height: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Kalam', cursive;
+  font-size: 1rem;
+
+  clip-path: url(#stickyClip);
+}
+
+.resize-icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: rotate(87deg);
+  bottom: -10px;
+  right: -15px;
+  transition: opacity 0.3s;
+  z-index: 10;
+  opacity: 0.1;
+
+  &:hover {
+    opacity: 1;
+    cursor: se-resize;
   }
 }
 
-.dragging {
-  border: 2px solid red;
+.note-pin {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: -15px;
+  top: 3px;
+  transform: rotate(-90deg);
+  z-index: 10;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 1;
+    cursor: grab;
+  }
 }
