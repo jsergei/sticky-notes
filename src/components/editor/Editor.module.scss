@@ -1,0 +1,37 @@
+.editor {
+  margin: 20px;
+  border: 1px dashed black;
+  width: 600px;
+  min-height: 100px;
+
+
+  // Push the following content down a bit
+  margin-bottom: 50px;
+}
+
+.header {
+  padding: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+
+
+  :global {
+    .btn:hover {
+      background: lightgrey;
+    }
+  }
+}
+
+.content {
+  padding: 4px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.content > *::before {
+  content:"";
+  display:inline-block;
+}

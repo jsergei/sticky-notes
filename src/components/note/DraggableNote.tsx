@@ -56,6 +56,3 @@ const DraggableNote: FC<DraggableNoteProps> = ({id, text, left, top, width, heig
 
 
 export default DraggableNote;
-
-// TODO: add cross to the trash area when a note is hovering over it
-
