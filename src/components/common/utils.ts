@@ -12,3 +12,5 @@ export interface NoteClickTranfer {
     clickLeft: number;
     clickTop: number;
 }
+
+export const EDITOR_CLEANUP_DEBOUNCE = 500;
